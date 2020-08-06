@@ -1,4 +1,10 @@
 # Automation
+IDE - Visual studio 2013
+Scripting language - C#
+Test Tool - Selenium
+
+
+
 Created Framework with the help of oops concepts for easy maintainance
 App.config -where passed all the configuration details
 WeatherReportUI - Which will have UI related Operations
