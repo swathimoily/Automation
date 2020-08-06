@@ -33,7 +33,7 @@ namespace WeatherReporting
         //Launches the url and dismiss the notification allow popup
         public void LaunchUrl()
         {
-            BasePageOps basePageOps = new BasePageOps();
+            UIHelper uiHelper = new UIHelper();
             HomePageOps homePageOps = new HomePageOps();
             if(ConfigurationManager.AppSettings["Browser"]=="Chrome")
             {
@@ -42,7 +42,7 @@ namespace WeatherReporting
                 driver = new ChromeDriver(ConfigurationManager.AppSettings["ChromeDriver"], opt);
                 driver.Navigate().GoToUrl(ConfigurationManager.AppSettings["NDTVurl"]);
                 driver.Manage().Timeouts().ImplicitWait=TimeSpan.FromSeconds(100);
-                basePageOps.WaitForPageLoad();
+                uiHelper.WaitForPageLoad();
                 homePageOps.DismissNotiicationAlert();                
             }
             //Else update code for repective browser

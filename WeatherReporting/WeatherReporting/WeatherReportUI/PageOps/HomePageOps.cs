@@ -7,16 +7,17 @@ using WeatherReporting.Pages;
 
 namespace WeatherReporting.PageOps
 {
-    public class HomePageOps:BasePageOps
+    public class HomePageOps:UIHelper
     {
         HomePage homePage = new HomePage();
-        BasePageOps basePageOps = new BasePageOps();
+        UIHelper uiHelper = new UIHelper();
 
         /// <summary>
         ///This will dismiss notification alert
         /// </summary>
         public void DismissNotiicationAlert()
         {
+            uiHelper.WaitForElementDisplay(homePage.NoThanks());
             if (homePage.NoThanks().Displayed)
                 homePage.NoThanks().Click();
         }

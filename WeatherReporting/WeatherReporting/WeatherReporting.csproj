@@ -36,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -63,14 +67,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="NDTVBase.cs" />
-    <Compile Include="PageOps\BasePageOps.cs" />
-    <Compile Include="PageOps\HomePageOps.cs" />
-    <Compile Include="PageOps\WeatherPageOps.cs" />
-    <Compile Include="Pages\HomePage.cs" />
-    <Compile Include="Pages\WeatherPage.cs" />
+    <Compile Include="WeatherReportUI\PageOps\UIHelper.cs" />
+    <Compile Include="WeatherReportUI\PageOps\HomePageOps.cs" />
+    <Compile Include="WeatherReportUI\PageOps\WeatherPageOps.cs" />
+    <Compile Include="WeatherReportUI\Pages\HomePage.cs" />
+    <Compile Include="WeatherReportUI\Pages\WeatherPage.cs" />
     <Compile Include="Resources\WeatherDetails.cs" />
-    <Compile Include="UITests\WeatherReportingTests.cs" />
+    <Compile Include="WeatherReportService\ServiceTestBaseHelper.cs" />
+    <Compile Include="Tests\WeatherReportingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WeatherReportService\WeatherReportingAPIHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

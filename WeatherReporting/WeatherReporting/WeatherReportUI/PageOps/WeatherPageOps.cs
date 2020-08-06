@@ -12,11 +12,14 @@ namespace WeatherReporting.PageOps
     class WeatherPageOps
     {
         WeatherPage weatherPage = new WeatherPage();
+        UIHelper uIHelper = new UIHelper();
 
+        /// <summary>
+        /// Wait for loading weather page
+        /// </summary>
         public void WaitForPageLoad()
         {
-            IWait<IWebDriver> wait = new WebDriverWait(NDTVBase.driver, TimeSpan.FromSeconds(100.00));
-            wait.Until(loading => (weatherPage.Loading().GetCssValue("Display").Equals("none")));
+            uIHelper.WaitForPageLoad(weatherPage.Loading());
         }
 
         /// <summary>
@@ -40,8 +43,8 @@ namespace WeatherReporting.PageOps
         {
             WeatherDetails weatherDetails = new WeatherDetails();       
             weatherPage.PinCity(city).Click();
-            weatherDetails.humidity = weatherPage.WeatherDetails("Humidity").GetAttribute("innerText");
-            weatherDetails.TempInDegrees = weatherPage.WeatherDetails("Temp in Degrees").GetAttribute("innerText");
+            weatherDetails.humidity = Convert.ToDouble((String.Join("", weatherPage.WeatherDetails("Humidity").GetAttribute("innerText").Where(char.IsDigit))));
+            weatherDetails.TempInDegrees = Convert.ToDouble((String.Join("", weatherPage.WeatherDetails("Temp in Degrees").GetAttribute("innerText").Where(char.IsDigit))));
             return weatherDetails;
         }
         
