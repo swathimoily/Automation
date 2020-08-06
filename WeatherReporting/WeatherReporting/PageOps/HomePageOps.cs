@@ -10,11 +10,12 @@ namespace WeatherReporting.PageOps
     public class HomePageOps:BasePageOps
     {
         HomePage homePage = new HomePage();
+        BasePageOps basePageOps = new BasePageOps();
 
         /// <summary>
-        /// If Notifcation allow message box displayed then dismiss it
+        ///This will dismiss notification alert
         /// </summary>
-        public HomePageOps()
+        public void DismissNotiicationAlert()
         {
             if (homePage.NoThanks().Displayed)
                 homePage.NoThanks().Click();
@@ -25,9 +26,10 @@ namespace WeatherReporting.PageOps
        /// </summary>
         public void NaviagateToWeather()
         {
+            WeatherPageOps weatherPageOps = new WeatherPageOps();
             homePage.SubMenu().Click();
             homePage.Weather().Click();
-            BasePageOps.WaitForPageLoad();
+            weatherPageOps.WaitForPageLoad();
         }
     }
 }

@@ -30,16 +30,20 @@ namespace WeatherReporting
             CloseUrl();
         }
 
-        //Launches the url 
+        //Launches the url and dismiss the notification allow popup
         public void LaunchUrl()
         {
+            BasePageOps basePageOps = new BasePageOps();
+            HomePageOps homePageOps = new HomePageOps();
             if(ConfigurationManager.AppSettings["Browser"]=="Chrome")
             {
                 ChromeOptions opt = new ChromeOptions();
                 opt.BinaryLocation = ConfigurationManager.AppSettings["Chrome"];
                 driver = new ChromeDriver(ConfigurationManager.AppSettings["ChromeDriver"], opt);
                 driver.Navigate().GoToUrl(ConfigurationManager.AppSettings["NDTVurl"]);
-                BasePageOps.WaitForPageLoad();    
+                driver.Manage().Timeouts().ImplicitWait=TimeSpan.FromSeconds(100);
+                basePageOps.WaitForPageLoad();
+                homePageOps.DismissNotiicationAlert();                
             }
             //Else update code for repective browser
                

@@ -1,15 +1,21 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WeatherReporting.Pages
 {
     public class WeatherPage
     {
         private By searchBox = By.ClassName("searchBox");
+        private By loading = By.Id("loading");
+
+        public IWebElement Loading()
+        {
+            return (NDTVBase.driver.FindElement(loading));
+        }
         
         public IWebElement SearchBox()
         {

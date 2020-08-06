@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,12 @@ namespace WeatherReporting.PageOps
     class WeatherPageOps
     {
         WeatherPage weatherPage = new WeatherPage();
+
+        public void WaitForPageLoad()
+        {
+            IWait<IWebDriver> wait = new WebDriverWait(NDTVBase.driver, TimeSpan.FromSeconds(100.00));
+            wait.Until(loading => (weatherPage.Loading().GetCssValue("Display").Equals("none")));
+        }
 
         /// <summary>
         /// Select the city in the pin to city list
