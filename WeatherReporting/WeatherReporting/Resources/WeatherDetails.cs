@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherReporting.Resources;
 
 namespace WeatherReporting
 {
@@ -22,11 +23,9 @@ namespace WeatherReporting
         {
             double tempDifference = uiWeather.TempInDegrees - apiWeather.TempInDegrees;
             double humidDiffence = uiWeather.humidity - apiWeather.humidity;
-           
-            if (tempDifference >= Convert.ToDouble(ConfigurationManager.AppSettings["StartRange"]) &&
-                tempDifference <= Convert.ToDouble(ConfigurationManager.AppSettings["EndRange"]) &&
-                humidDiffence >= Convert.ToDouble(ConfigurationManager.AppSettings["StartRange"]) &&
-                humidDiffence <= Convert.ToDouble(ConfigurationManager.AppSettings["EndRange"]))
+
+            if (MathHelper.CheckVariance(tempDifference,Convert.ToInt32(ConfigurationManager.AppSettings["TempVariance"]))&&
+                MathHelper.CheckVariance(humidDiffence, Convert.ToInt32(ConfigurationManager.AppSettings["HumidityVariance"])))
                 return true;
             else
                 return false;

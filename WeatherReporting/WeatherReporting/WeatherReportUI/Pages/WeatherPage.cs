@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WeatherReporting.PageOps;
 
 namespace WeatherReporting.Pages
 {
@@ -12,8 +13,11 @@ namespace WeatherReporting.Pages
         private By searchBox = By.ClassName("searchBox");
         private By loading = By.Id("loading");
 
+        UIHelper uiHelper = new UIHelper();
+
         public IWebElement Loading()
         {
+            uiHelper.WaitForElementToLoad(loading);
             return (NDTVBase.driver.FindElement(loading));
         }
         

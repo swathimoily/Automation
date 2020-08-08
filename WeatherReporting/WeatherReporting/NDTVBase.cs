@@ -5,6 +5,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,20 @@ namespace WeatherReporting
     public class NDTVBase
     {
         public static IWebDriver driver;
-        
+        public TestContext TestContext
+        {
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
+        }
+
+        private TestContext testContextInstance;
+
         //This will run before starting every test methods
         [TestInitialize()]
         public void TestInialize()
@@ -23,11 +37,24 @@ namespace WeatherReporting
             LaunchUrl();
         }
 
-        //This will run before ending every test methods
+        //This will run before ending every test methods contains logs creating info
         [TestCleanup]
         public void TestCleanUp()
         {
             CloseUrl();
+            switch(TestContext.CurrentTestOutcome)
+            {
+                case UnitTestOutcome.Passed: Logger.Log("\n"+DateTime.Now+" : "+ TestContext.TestName + " : Passed");
+                    break;
+                case UnitTestOutcome.Failed: Logger.Log("\n"+DateTime.Now + " : " + TestContext.TestName + " : Failed - " + Logger.exception);
+                    break;
+                case UnitTestOutcome.Aborted: Logger.Log("\n" + DateTime.Now + " : " + TestContext.TestName + " : Passed"); Logger.Log("\n" + DateTime.Now + " : " + TestContext.TestName + " : Passed");
+                    break;
+                case UnitTestOutcome.Timeout: Logger.Log("\n" + DateTime.Now + " : " + TestContext.TestName + " : Timeout");
+                    break;
+                default: Logger.Log("Unknown Error!!Please Debug..");
+                    break;
+            }
         }
 
         //Launches the url and dismiss the notification allow popup
@@ -41,7 +68,6 @@ namespace WeatherReporting
                 opt.BinaryLocation = ConfigurationManager.AppSettings["Chrome"];
                 driver = new ChromeDriver(ConfigurationManager.AppSettings["ChromeDriver"], opt);
                 driver.Navigate().GoToUrl(ConfigurationManager.AppSettings["NDTVurl"]);
-                driver.Manage().Timeouts().ImplicitWait=TimeSpan.FromSeconds(100);
                 uiHelper.WaitForPageLoad();
                 homePageOps.DismissNotiicationAlert();                
             }
@@ -53,7 +79,7 @@ namespace WeatherReporting
         public void CloseUrl()
         {
             driver.Quit();
-        }
+        }       
     
     }
 }

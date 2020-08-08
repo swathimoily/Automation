@@ -3,6 +3,7 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Text;
+using System.Threading;
 using WeatherReporting.Pages;
 
 namespace WeatherReporting.PageOps
@@ -35,10 +36,32 @@ namespace WeatherReporting.PageOps
         /// <param name="element"></param>
         public void WaitForElementDisplay(IWebElement element)
         {
-            IWait<IWebDriver> wait = new WebDriverWait(NDTVBase.driver, TimeSpan.FromSeconds(300.00));
+            IWait<IWebDriver> wait = new WebDriverWait(NDTVBase.driver, TimeSpan.FromSeconds(2000.00));
             wait.Until(driver1 => element.Displayed);
+        }
 
-        }  
+        /// <summary>
+        /// Wait for the element to load if elements returns null
+        /// Mostly for page load element check
+        /// </summary>
+        /// <param name="by"></param>
+        public void WaitForElementToLoad(By by)
+        {
+            IWebElement element = null;
+            int waitTime = 60;
+            while (waitTime != 500 && element == null)
+            {
+                try
+                {
+                    element = NDTVBase.driver.FindElement(by);
+                }
+                catch
+                {
+                    Thread.Sleep(50);
+                }
+                waitTime = waitTime + 100;
+            }
+        }
         
     }
 }

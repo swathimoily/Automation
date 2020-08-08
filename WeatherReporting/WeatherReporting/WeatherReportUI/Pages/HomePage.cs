@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherReporting.PageOps;
 
 namespace WeatherReporting.Pages
 {
@@ -12,10 +13,13 @@ namespace WeatherReporting.Pages
         private By noThanks = By.ClassName("notnow");
         private By subMenu = By.Id("h_sub_menu");
         private By weather = By.LinkText("WEATHER");
+
+        UIHelper uiHelper = new UIHelper();
               
 
         public IWebElement NoThanks()
         {
+            uiHelper.WaitForElementToLoad(noThanks);
             return (NDTVBase.driver.FindElement(noThanks));
         }
 
